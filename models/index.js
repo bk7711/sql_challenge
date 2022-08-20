@@ -5,12 +5,12 @@ const Doctor = require("./Doctor");
 const Appointments = require("./Appointments");
 
 //Doctor has many Patients
-Doctor.hasMany(Patients, {
+Doctor.hasMany(Patient, {
   foreignKey: "patient_id",
 });
 
 //A patient can have many doctors
-Patient.hasMany(Doctors, {
+Patient.hasMany(Doctor, {
   foreignKey: "id",
 });
 
