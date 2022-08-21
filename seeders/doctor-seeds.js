@@ -8,7 +8,7 @@ const doctorData = [
   {
     doctor_name: "Dr. Kailan Harper",
     doctor_email: "kharper@test.com",
-    patient_id: [1, 2],
+    patients: [1, 2],
   },
 ];
 
