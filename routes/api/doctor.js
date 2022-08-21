@@ -76,5 +76,35 @@ router.put("/:id", (req, res) => {
     });
 });
 //delete by id
+router.delete("/:id", (req, res) => {
+  Doctor.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((dbDoctorData) => {
+      if (!dbDoctorData) {
+        res.status(404).json({ message: "No doctor found with this id" });
+        return;
+      }
+      res.json(dbDoctorData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 //create
+router.post("/", (req, res) => {
+  Patient.create({
+    doctor_name: req.body.doctor_name,
+    doctor_email: req.body.doctor_email,
+    patient_id: req.body.patient_id,
+  })
+    .then((dbDoctorData) => res.json(dbDoctorData))
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
+    });
+});
 module.exports = router;

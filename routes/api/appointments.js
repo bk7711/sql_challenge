@@ -80,5 +80,36 @@ router.put("/:id", (req, res) => {
 });
 
 //delete by id
+router.delete("/:id", (req, res) => {
+  Appointments.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((dbAppointmentData) => {
+      if (!dbAppointmentData) {
+        res.status(404).json({ message: "No appointment found with this id" });
+        return;
+      }
+      res.json(dbAppointmentData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 //create
+router.post("/", (req, res) => {
+  Appointments.create({
+    date: req.body.date,
+    patient_id: req.body.patient_id,
+    doctor_id: req.body.doctor_id,
+  })
+    .then((dbAppointmentData) => res.json(dbAppointmentData))
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
+    });
+});
+
 module.exports = router;

@@ -64,7 +64,7 @@ router.put("/:id", (req, res) => {
     ],
   })
     .then((dbPatientData) => {
-      if (!dbPatientData[0]) {
+      if (!dbPatientData) {
         res.status(404).json({ message: "No patient found with this id" });
         return;
       }
@@ -76,5 +76,36 @@ router.put("/:id", (req, res) => {
     });
 });
 //delete by id
+router.delete("/:id", (req, res) => {
+  Patient.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((dbPatientData) => {
+      if (!dbPatientData) {
+        res.status(404).json({ message: "No patient found with this id" });
+        return;
+      }
+      res.json(dbPatientData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 //create
+router.post("/", (req, res) => {
+  Patient.create({
+    patient_name: req.body.patient_name,
+    patient_email: req.body.patient_email,
+    doctor_name: req.body.doctor_name,
+  })
+    .then((dbPatientData) => res.json(dbPatientData))
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
+    });
+});
 module.exports = router;
